@@ -1,4 +1,4 @@
-## Structured-light-stereo
+# Structured-light-stereo
 
 This repo uses a stereo camera and gray-code-based structured light to realize dense 3D reconstruction. 
 
