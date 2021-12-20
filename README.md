@@ -2,8 +2,8 @@
 
 This repo uses a stereo camera and gray-code-based structured light to realize dense 3D reconstruction. 
 
-![Captured patterns](./imgs/patterns.gif)
-![pcd](./imgs/pcd.png)
+
+<img src="./imgs/patterns.gif" alt="pcd" style="width:600px;"/>. &nbsp; <img src="./imgs/pcd.png" alt="pcd" style="width:350px;"/>
 
 
 ### How to use:
