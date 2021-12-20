@@ -2,6 +2,10 @@
 
 This repo uses a stereo camera and gray-code-based structured light to realize dense 3D reconstruction. 
 
+![Captured patterns](./imgs/patterns.gif)
+![pcd](./imgs/pcd.png)
+
+
 ### How to use:
 * **STEP 1:** Setup the stereo camera and calibrate it with a Charuco marker. An example dataset is provided in `./data/stereo_calib_flir`. You can play with it by running `./capture/charuco/calib.py`. The calibration results will be saved in '`./data/stereo_calib_flir/stereo_calib_data.h5`.
 * **STEP 2:** Connect your projector with your computer and run `gray_code_encoder.py` to project gray-code patterns. I used two FLIR cameras to build my stereo system and the driver script is `./capture_calib/double_flir_capture.py`. An example dataset is in `./data/bag`.
