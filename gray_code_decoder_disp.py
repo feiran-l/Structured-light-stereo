@@ -10,6 +10,26 @@ import open3d as o3d
 from open3d import geometry as o3dg
 
 
+
+def disp_filter(disp, morphology_ker=np.ones((5, 5), np.uint8), edge_ker=np.ones((7, 7), np.uint8)):
+    # Invert
+    disp_map = disp.astype(np.float32)
+    disp_map[disp_map != 0] = disp.shape[1] - disp_map[disp_map != 0]
+    # Hole closing
+    disp_map = cv2.morphologyEx(disp_map, cv2.MORPH_CLOSE, morphology_ker)
+    # Bilateral fiter
+    disp_map = cv2.bilateralFilter(disp_map, 5, 2, 2)
+    # Invert
+    disp_map[disp_map != 0] = disp.shape[1] - disp_map[disp_map != 0]
+    # remove edge pixels which are often extremely noisy
+    if disp.min() < 0:  # left disparity
+        cv2.dilate(disp_map, edge_ker)
+    elif disp.max() > 0:
+        cv2.erode(disp_map, edge_ker)
+    return disp_map.astype(np.float64)
+
+
+
 def numpy_to_o3d(pcd_np):
     valid_ids = (~np.isnan(pcd_np).any(axis=1)) * (~np.isinf(pcd_np).any(axis=1))
     valid_pcd = pcd_np[valid_ids]
@@ -81,8 +101,10 @@ if __name__ == '__main__':
     white_list = np.array([rect_list_l[-2], rect_list_r[-2]])
     black_list = np.array([rect_list_l[-1], rect_list_r[-1]])
     ret, disp_l = graycode.decode(pattern_list, np.zeros_like(pattern_list[0]), black_list, white_list)
+    disp_l = disp_filter(disp_l)  # post-processing the disp map
+
     plt.imshow(disp_l)
-    plt.title('disparity map')
+    plt.title('left disparity map')
     plt.show()
 
     # disp to pcd
