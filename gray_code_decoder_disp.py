@@ -82,7 +82,6 @@ if __name__ == '__main__':
     white_list = np.array([rect_list_l[-2], rect_list_r[-2]])
     black_list = np.array([rect_list_l[-1], rect_list_r[-1]])
     ret, disp_l = graycode.decode(pattern_list, np.zeros_like(pattern_list[0]), black_list, white_list)
-    disp_l = disp_filter(disp_l)  # post-processing the disp map
 
     plt.imshow(disp_l)
     plt.title('left disparity map')
